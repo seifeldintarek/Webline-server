@@ -1,0 +1,44 @@
+
+spring:
+  application:
+    name: user-service
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/xchat_users
+    username: admin
+    password: admin
+    driver-class-name: org.postgresql.Driver
+
+logging:
+  level:
+    org.springframework.security: DEBUG
+
+jwt:
+  secret: myUltraSuperSecretKeyThatIsAtLeast32Chars!
+  expiration: 3600000
+
+server:
+  port: 5500
+  servlet:
+    context-path: /api
+
+supabase:
+  url: https://kogunfxmjfnylnazpbsy.supabase.co
+  bucket: x-chat_images
+  key:
+
+app:
+  api:
+    user: /user
+    auth: /auth
+    signup: /signup
+    login: /login
+    by-id: /id/{id}
+    search: /search
+    friend: /friend
+    addfriend: /add
+    acceptfriend: /accept/{id}
+    cancelrequest: /cancel/{id}
