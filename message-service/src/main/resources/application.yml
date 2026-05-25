@@ -8,8 +8,8 @@ spring:
     name: message-service
   data:
     mongodb:
-      uri: mongodb://admin:admin@localhost:27017/mydatabase
-      database: mydatabase
+      uri: mongodb://admin:admin@localhost:27017/mydatabase?authSource=admin
+
 jwt:
   secret: myUltraSuperSecretKeyThatIsAtLeast32Chars!
   expiration: 3600000
