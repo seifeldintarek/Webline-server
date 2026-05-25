@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/xchat_users
     username: admin
-    password: admin
+    password: weblinedb
     driver-class-name: org.postgresql.Driver
 
 logging:
@@ -23,7 +23,7 @@ jwt:
 server:
   port: 5500
   servlet:
-    context-path: /api
+    context-path: /api/users
 
 supabase:
   url: https://kogunfxmjfnylnazpbsy.supabase.co

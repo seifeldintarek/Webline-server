@@ -26,6 +26,7 @@ public class AuthController {
     @PostMapping(path = "${app.api.signup}")
     public User register(@Valid @RequestBody UserDTO userDTO) {
         User user = this.authService.register(userDTO);
+
         return user;
     }
 
