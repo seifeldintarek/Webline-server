@@ -18,6 +18,11 @@ public class GroupController {
         this.groupService = groupService;
     }
 
+    @GetMapping(path = "/{userId}/groups")
+    public Page<Group> getAllGroups(@PathVariable("userId") Long userId, Pageable page) {
+        return this.groupService.getAllGroups(userId, page);
+    }
+
     @GetMapping(path = "/{groupId}")
     public Group getGroup(@PathVariable("groupId") Long groupId) {
        return this.groupService.getGroup(groupId);
