@@ -37,13 +37,13 @@ public class MessageController {
                             @DestinationVariable("conversationId") String conversationId,
                             SimpMessageHeaderAccessor headerAccessor) throws NotFoundException {
 
-        Long userId = (Long) headerAccessor.getSessionAttributes().get("userId");
-
-        if (!userId.equals(chatMessage.getSenderId())) {
-            throw new RuntimeException("Unauthorized: userId does not match token");
-        }
+//        Long userId = (Long) headerAccessor.getSessionAttributes().get("id");
+//
+//        if (!userId.equals(chatMessage.getSenderId())) {
+//            throw new RuntimeException("Unauthorized: userId does not match token");
+//        }
         ConversationDTO conversation = conversationService.getConversationById(conversationId);
-        if (conversation != null && userId.equals(chatMessage.getSenderId()) && conversation.getParticipants().contains(userId)) {
+        if (conversation != null && conversation.getParticipants().contains(chatMessage.getSenderId())) {
             MessageDTO savedMessage = messageService.saveMessage(chatMessage);
             messagingTemplate.convertAndSend("/conversation/" + conversationId, savedMessage);
         } else {

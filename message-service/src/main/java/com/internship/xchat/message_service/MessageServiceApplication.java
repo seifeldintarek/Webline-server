@@ -8,7 +8,7 @@ import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBr
 @SpringBootApplication
 @EnableWebSocketMessageBroker
 @ComponentScan(basePackages = { "com.internship.xchat.message_service",
-		"com.internship.xchat.common_lib" })
+								"com.internship.xchat.common_lib" })
 public class MessageServiceApplication {
 
 	public static void main(String[] args) {

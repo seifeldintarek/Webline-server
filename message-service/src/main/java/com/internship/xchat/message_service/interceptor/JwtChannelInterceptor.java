@@ -37,7 +37,7 @@ public class JwtChannelInterceptor implements ChannelInterceptor {
                     Long userId = claims.get("id", Long.class);
                     String username = claims.getSubject();
 
-                    accessor.getSessionAttributes().put("userId", userId);
+                    accessor.getSessionAttributes().put("id", userId);
                     accessor.getSessionAttributes().put("username", username);
 
                     System.out.println("STOMP CONNECT authenticated for user: " + userId);

@@ -1,8 +1,8 @@
 package com.internship.xchat.message_service.enums;
 
 public enum ConversationType {
-    GOROUP("group"),
-    PRIVATE("private");
+    GROUP("GROUP"),
+    PRIVATE("PRIVATE");
 
     private final String type;
 
