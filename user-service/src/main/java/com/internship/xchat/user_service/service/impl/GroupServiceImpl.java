@@ -27,8 +27,9 @@ public class GroupServiceImpl implements GroupService {
     }
 
     @Override
-    public Page<Group> getAllGroups(Long userId,Pageable pageable) {
-      return   this.groupRepository.findGroupByUserId(userId, pageable);
+    public Page<Group> getAllGroups(Long userId, Pageable pageable) {
+        return this.groupMemberRepository
+                .findGroupByMember_Id(userId, pageable);// extract Group from each GroupMember
     }
 
     @Override
