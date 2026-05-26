@@ -11,5 +11,7 @@ import com.internship.xchat.message_service.entities.Message;
 public interface MessageRepository extends MongoRepository<Message, String> {
     // Find all messages for a specific conversation, ordered by timestamp.
     List<Message> findByConversationIdOrderByTimestampAsc(String conversationId);
+    void deleteAllByConversationId(String conversationId);
+    void deleteByConversationIdAndId(String conversationId, String id);
     
 }

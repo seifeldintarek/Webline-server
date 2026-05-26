@@ -44,7 +44,6 @@ public class Conversation {
     @Field("updated_at")
     private LocalDateTime updatedAt;
 
-    @LastModifiedDate
     @Field("last_modified_by")
     private Long lastModifiedBy;
 

@@ -56,6 +56,14 @@ public class ConversationServiceImpl implements ConversationService {
         return this.conversationMapper.toDTO(conversation);
     }
 
+
+    @Override
+    public ConversationDTO getConversationByGroupId(Long groupId) {
+        Conversation conversation = this.conversationRepository.findByGroupId(groupId)
+                .orElseThrow(() -> new ResourceNotFoundException("Conversation"));
+        return this.conversationMapper.toDTO(conversation);
+    }
+
     @Override
     public ConversationDTO updateConversation(String id, ConversationDTO conversationDTO) throws NotFoundException {
         Conversation existingConversation = conversationRepository.findById(id)
@@ -64,5 +72,14 @@ public class ConversationServiceImpl implements ConversationService {
         Conversation conversation = this.conversationMapper.toEntity(conversationDTO);
         Conversation updatedConversation  = this.conversationRepository.save(conversation);
         return this.conversationMapper.toDTO(updatedConversation);
+    }
+
+    @Override
+    public void deleteById(String convId) {
+        try {
+            this.conversationRepository.deleteById(convId);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("conversation");
+        }
     }
 }

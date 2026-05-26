@@ -39,11 +39,6 @@ public class GroupController {
         return admins == null ? Page.empty() : admins;
     }
 
-    @GetMapping(path = "/{groupId}/isMember/{userId}")
-public boolean isMember(@PathVariable("groupId") Long groupId, @PathVariable("userId") Long userId) {
-        return this.groupService.isMember(groupId, userId);
-    }
-
     @PostMapping
     public Group createGroup(@RequestBody GroupDTO groupDTO) {
         if (groupDTO == null)
@@ -51,10 +46,6 @@ public boolean isMember(@PathVariable("groupId") Long groupId, @PathVariable("us
         return this.groupService.createGroup(groupDTO);
     }
 
-    @RequestMapping(path = "/{groupId}/setAdmin/{userId}", method = {RequestMethod.PUT,RequestMethod.PATCH})
-    public GroupMember setAdmin(@PathVariable("groupId") Long groupId, @PathVariable("userId") Long userId) {
-        return this.groupService.setAdmin(groupId, userId);
-    }
 
     @RequestMapping(path = "/{groupId}", method = {RequestMethod.PUT,RequestMethod.PATCH})
     public Group updateGroup(@RequestBody GroupDTO groupDTO, @PathVariable("groupId") Long groupId) {

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import com.internship.xchat.common_lib.exception.ResourceNotFoundException;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -38,5 +39,19 @@ public class MessageServiceImpl implements MessageService {
     public List<MessageDTO> getMessagesForConversation(String conversationId) {
         List<Message> messages = this.messageRepository.findByConversationIdOrderByTimestampAsc(conversationId);
         return messages.stream().map(this.messageMapper::toDTO).collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteAllMessagesByConversationId(String conversationId) {
+        try {
+            this.messageRepository.deleteAllByConversationId(conversationId);
+        } catch (Exception e) {
+            throw new ResourceNotFoundException("Messages");
+        }
+    }
+
+    @Override
+    public void deleteByConversationIdAndId(String conversationId, String messageId) {
+        this.messageRepository.deleteByConversationIdAndId(conversationId, messageId);
     }
 }

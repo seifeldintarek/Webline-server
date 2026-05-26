@@ -14,4 +14,6 @@ public interface ConversationService {
     public ConversationDTO saveConversation(ConversationDTO conversationDTO);
     public ConversationDTO updateConversation(String id, ConversationDTO conversationDTO) throws NotFoundException;
     public List<MessageDTO> getMessagesForConversation(String conversationId);
+    public ConversationDTO getConversationByGroupId(Long groupId);
+    public void deleteById(String convId);
 }
