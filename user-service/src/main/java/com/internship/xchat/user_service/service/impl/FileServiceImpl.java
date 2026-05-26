@@ -34,7 +34,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     public String uploadImage(Long uid, String base64Image) {
-        String fileName = uid + "_" + System.currentTimeMillis() + getFileExtension(base64Image);
+        String fileName = "pp/" + uid + getFileExtension(base64Image);
         String filePath = this.supaBucket + "/" + fileName;
 
         uploadToSupabase(fileName, base64Image);
@@ -57,6 +57,7 @@ public class FileServiceImpl implements FileService {
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + this.supaKey);
             headers.set("Content-Type", getContentType(base64Image));
+            headers.set("x-upsert", "true");
 
             HttpEntity<byte[]> request = new HttpEntity<>(imageBytes, headers);
             RestTemplate restTemplate = new RestTemplate();
@@ -70,7 +71,6 @@ public class FileServiceImpl implements FileService {
             throw new RuntimeException("Image upload failed: " + e.getMessage(), e);
         }
     }
-
     private String getFileExtension(String base64Image) {
         if (base64Image.startsWith("data:image/jpeg")) return ".jpg";
         if (base64Image.startsWith("data:image/png")) return ".png";
