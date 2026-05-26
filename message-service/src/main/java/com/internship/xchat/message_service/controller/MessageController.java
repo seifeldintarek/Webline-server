@@ -64,4 +64,20 @@ public class MessageController {
         return messages == null ? Collections.emptyList() : messages;
 
     }
+
+    @DeleteMapping("/{convId}")
+    public void deleteConversation(@PathVariable("convId") String convId) throws NotFoundException {
+        Authentication userAuthentication = SecurityContextHolder.getContext().getAuthentication();
+        Claims userClaims = (Claims) userAuthentication.getPrincipal();
+        Long userId = userClaims.get("id", Long.class);
+
+        this.messageService.deleteAllMessagesByConversationId(convId);
+    }
+
+    @DeleteMapping("/{convId}/{msgId}")
+    public void deleteById(@PathVariable("convId") String convId, @PathVariable("msgId") String messageId )
+    {
+        this.messageService.deleteByConversationIdAndId(convId, messageId);
+    }
+
 }

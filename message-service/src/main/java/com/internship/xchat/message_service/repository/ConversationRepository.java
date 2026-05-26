@@ -12,6 +12,9 @@ import com.internship.xchat.message_service.entities.Conversation;
 @Repository
 public interface ConversationRepository extends MongoRepository<Conversation, String> {
 
-    @Query("{ 'type' : ?0, 'participants' : { $all: ?1, $size: ?2 } }")
+    @Query("{ 'type' : ?0, 'participants' : { $all: ?1 }, $expr: { $eq: [{ $size: '$participants' }, ?2] } }")
     Optional<Conversation> findPrivateConversationByParticipants(String type, List<Long> participants, int size);
+
+    Optional<Conversation> findByGroupId(Long groupId);
+
 }
