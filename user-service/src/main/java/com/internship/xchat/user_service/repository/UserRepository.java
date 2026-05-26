@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import org.springframework.data.domain.Pageable;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Optional;
 
 @Repository
@@ -24,11 +26,10 @@ public interface UserRepository extends JpaRepository<User, Long> {
     nativeQuery = true)
     Page<User> search(@Param("name") String name, @Param("email") String email, @Param("number") String number, Pageable pageable);
 
-    @Query(value = "UPDATE users " +
-            "SET image = :image " +
-            "WHERE id = :id",
-            nativeQuery = true)
-    void updateUserImage(@Param("id") Long id, @Param("image") String image);
+    @Modifying
+    @Transactional
+    @Query(value = "UPDATE users SET image = :image WHERE id = :id", nativeQuery = true)
+    int updateUserImage(@Param("id") Long id, @Param("image") String image);
 
     @Query(nativeQuery = true,
     value = "Select u.image from users u where id = :id")

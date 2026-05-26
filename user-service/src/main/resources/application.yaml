@@ -26,9 +26,9 @@ server:
     context-path: /api/users
 
 supabase:
-  url: https://kogunfxmjfnylnazpbsy.supabase.co
-  bucket: x-chat_images
-  key:
+  url: https://xkhlsiuhegxveuxciceh.supabase.co
+  bucket: profile_pic
+  key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhraGxzaXVoZWd4dmV1eGNpY2VoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3OTgxNjYsImV4cCI6MjA5NTM3NDE2Nn0.wG5P0stFov0hNIxpHpsOAYJGNln9Phum3WXAXYdsUaw
 
 app:
   api:
@@ -36,7 +36,7 @@ app:
     auth: /auth
     signup: /signup
     login: /login
-    by-id: /id/{id}
+    by-id: /{id}
     search: /search
     friend: /friend
     addfriend: /add
