@@ -57,9 +57,9 @@ public class MessageController {
     public List<MessageDTO> getMessages(
             @PathVariable("conversationId") String conversationId) throws NotFoundException {
 
-//        Authentication userAuthentication = SecurityContextHolder.getContext().getAuthentication();
-//        Claims userClaims = (Claims) userAuthentication.getPrincipal();
-//        Long userId = userClaims.get("id", Long.class);
+        Authentication userAuthentication = SecurityContextHolder.getContext().getAuthentication();
+        Claims userClaims = (Claims) userAuthentication.getPrincipal();
+        Long userId = userClaims.get("id", Long.class);
 
 
         List<MessageDTO> messages = messageService.getMessagesForConversation(conversationId);
