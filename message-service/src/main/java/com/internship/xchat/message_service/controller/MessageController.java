@@ -27,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/messages")
 public class MessageController {
     private final SimpMessageSendingOperations messagingTemplate;
     private final ConversationService conversationService;

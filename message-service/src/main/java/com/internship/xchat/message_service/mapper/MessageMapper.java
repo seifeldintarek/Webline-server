@@ -33,6 +33,10 @@ public class MessageMapper {
         if(message.getTimestamp() != null) {
             messageDTO.setTimestamp(message.getTimestamp());
         }
+        if (message.getAttachment() != null)
+        {
+            messageDTO.setAttachment(message.getAttachment());
+        }
         return messageDTO;
     }
 
@@ -49,6 +53,10 @@ public class MessageMapper {
         }
         if(messageDTO.getSenderId() != null) {
             message.setSenderId(messageDTO.getSenderId());
+        }
+        if (messageDTO.getAttachment() != null)
+        {
+            message.setAttachment(messageDTO.getAttachment());
         }
         return message;
     }
