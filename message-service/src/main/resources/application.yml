@@ -9,6 +9,11 @@ spring:
   data:
     mongodb:
       uri: mongodb://admin:admin@localhost:27017/mydatabase?authSource=admin
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 10MB
+      max-request-size: 10MB
 
 jwt:
   secret: myUltraSuperSecretKeyThatIsAtLeast32Chars!
@@ -17,3 +22,8 @@ jwt:
 logging:
   level:
     org.springframework.security: DEBUG
+
+supabase:
+  url: https://xkhlsiuhegxveuxciceh.supabase.co
+  bucket: images
+  key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhraGxzaXVoZWd4dmV1eGNpY2VoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzk3OTgxNjYsImV4cCI6MjA5NTM3NDE2Nn0.wG5P0stFov0hNIxpHpsOAYJGNln9Phum3WXAXYdsUaw

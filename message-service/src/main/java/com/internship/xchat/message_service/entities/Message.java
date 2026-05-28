@@ -3,6 +3,8 @@ package com.internship.xchat.message_service.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.internship.xchat.message_service.dto.AttachmentDto;
+import com.internship.xchat.message_service.enums.MessageType;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
@@ -28,7 +30,7 @@ public class Message {
     private String content;
 
     @Field("content_type")
-    private String contentType;
+    private MessageType contentType;
 
     @CreatedDate
     @Field("timestamp")
@@ -39,4 +41,7 @@ public class Message {
 
     @Field("read_by")
     private List<Long> readBy;
+
+    @Field("attachment")
+    private AttachmentDto attachment;
 }

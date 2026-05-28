@@ -27,6 +27,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/messages")
 public class MessageController {
     private final SimpMessageSendingOperations messagingTemplate;
     private final ConversationService conversationService;
@@ -37,11 +38,11 @@ public class MessageController {
                             @DestinationVariable("conversationId") String conversationId,
                             SimpMessageHeaderAccessor headerAccessor) throws NotFoundException {
 
-//        Long userId = (Long) headerAccessor.getSessionAttributes().get("id");
-//
-//        if (!userId.equals(chatMessage.getSenderId())) {
-//            throw new RuntimeException("Unauthorized: userId does not match token");
-//        }
+        Long userId = (Long) headerAccessor.getSessionAttributes().get("id");
+        if (userId != null && !userId.equals(chatMessage.getSenderId())) {
+            throw new RuntimeException("Unauthorized: userId does not match token");
+        }
+
         ConversationDTO conversation = conversationService.getConversationById(conversationId);
         if (conversation != null && conversation.getParticipants().contains(chatMessage.getSenderId())) {
             MessageDTO savedMessage = messageService.saveMessage(chatMessage);
@@ -51,13 +52,14 @@ public class MessageController {
         }
     }
 
-    @GetMapping("/{conversationId}/messages")
+
+    @GetMapping("/{conversationId}")
     public List<MessageDTO> getMessages(
             @PathVariable("conversationId") String conversationId) throws NotFoundException {
 
-        Authentication userAuthentication = SecurityContextHolder.getContext().getAuthentication();
-        Claims userClaims = (Claims) userAuthentication.getPrincipal();
-        Long userId = userClaims.get("id", Long.class);
+//        Authentication userAuthentication = SecurityContextHolder.getContext().getAuthentication();
+//        Claims userClaims = (Claims) userAuthentication.getPrincipal();
+//        Long userId = userClaims.get("id", Long.class);
 
 
         List<MessageDTO> messages = messageService.getMessagesForConversation(conversationId);
