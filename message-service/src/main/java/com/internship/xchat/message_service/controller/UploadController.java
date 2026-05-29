@@ -15,10 +15,12 @@ public class UploadController {
     private final FileStorageService fileStorageService;
 
     @PostMapping
-    public ResponseEntity<AttachmentDto> upload(@RequestParam("file") MultipartFile file,@RequestParam("conversationId") String conversationId)
-            throws Exception {
+    public ResponseEntity<AttachmentDto> upload(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("conversationId") String conversationId,
+            @RequestParam("type") String type) throws Exception {
 
-        String url = fileStorageService.uploadImage(file, conversationId);
+        String url = fileStorageService.uploadFiles(file, conversationId, type);
 
         AttachmentDto dto = new AttachmentDto();
         dto.setUrl(url);

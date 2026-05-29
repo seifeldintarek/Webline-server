@@ -21,8 +21,9 @@ public class FileStorageServiceImpl implements FileStorageService {
     private String supabaseUrl;
 
     @Override
-    public String uploadImage(MultipartFile file, String conversationId) throws Exception{
-        String fileName = conversationId + "/" + UUID.randomUUID() + "_" + file.getOriginalFilename();
+    public String uploadFiles(MultipartFile file, String conversationId, String fileType) throws Exception {
+        String fileName = conversationId + "/" + fileType.toLowerCase()
+                + "/" + UUID.randomUUID() + "_" + file.getOriginalFilename();
 
         supabaseWebClient.post()
                 .uri("/storage/v1/object/" + bucket + "/" + fileName)
@@ -33,7 +34,6 @@ public class FileStorageServiceImpl implements FileStorageService {
                 .block();
 
         return supabaseUrl + "/storage/v1/object/public/" + bucket + "/" + fileName;
-
     }
 
 
