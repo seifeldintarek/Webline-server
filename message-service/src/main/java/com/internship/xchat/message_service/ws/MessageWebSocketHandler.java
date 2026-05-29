@@ -32,11 +32,12 @@ public class MessageWebSocketHandler extends TextWebSocketHandler {
         dto.setSenderId(payload.getSenderId());
         dto.setContentType(payload.getType());
 
-        if (payload.getType() == MessageType.IMAGE) {
-            dto.setAttachment(payload.getAttachment());
-        } else {
+
+        if (payload.getType() == MessageType.TEXT)
             dto.setContent(payload.getTextContent());
-        }
+        else
+            dto.setAttachment(payload.getAttachment());
+
 
         MessageDTO saved = messageService.saveMessage(dto);
 
