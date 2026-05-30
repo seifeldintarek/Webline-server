@@ -9,6 +9,8 @@ import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.messaging.support.ChannelInterceptor;
 import org.springframework.messaging.support.MessageHeaderAccessor;
 
+import java.security.Principal;
+
 public class JwtChannelInterceptor implements ChannelInterceptor {
 
     private final String jwtSecret;
@@ -41,6 +43,11 @@ public class JwtChannelInterceptor implements ChannelInterceptor {
                     accessor.getSessionAttributes().put("username", username);
 
                     System.out.println("STOMP CONNECT authenticated for user: " + userId);
+
+                    final String principalName = String.valueOf(userId);
+                    accessor.setUser(new Principal() {
+                        @Override public String getName() { return principalName; }
+                    });
 
                 } catch (Exception e) {
                     System.out.println("Invalid JWT in STOMP CONNECT: " + e.getMessage());
