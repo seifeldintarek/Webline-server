@@ -1,5 +1,7 @@
 package com.internship.xchat.message_service.controller;
 
+import com.internship.xchat.message_service.dto.CallDeclineDto;
+import com.internship.xchat.message_service.dto.CallInitiateDto;
 import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -52,6 +54,44 @@ public class MessageController {
         }
     }
 
+    @MessageMapping("/call.initiate")
+    public void initiateCall(@Payload CallInitiateDto dto,
+                             SimpMessageHeaderAccessor headerAccessor) throws NotFoundException {
+
+        Long userId = (Long) headerAccessor.getSessionAttributes().get("id");
+        if (userId == null || !userId.equals(dto.getCallerId())) {
+            throw new RuntimeException("Unauthorized: caller id does not match token");
+        }
+
+        ConversationDTO conversation = conversationService.getConversationById(dto.getConversationId());
+        if (conversation == null
+                || !conversation.getParticipants().contains(userId)
+                || !conversation.getParticipants().contains(dto.getReceiverId())) {
+            throw new HttpClientErrorException(HttpStatusCode.valueOf(401), "Unauthorized");
+        }
+
+        messagingTemplate.convertAndSendToUser(
+                String.valueOf(dto.getReceiverId()),
+                "/queue/call",
+                dto
+        );
+    }
+
+    @MessageMapping("/call.decline")
+    public void declineCall(@Payload CallDeclineDto dto,
+                            SimpMessageHeaderAccessor headerAccessor) {
+
+        Long userId = (Long) headerAccessor.getSessionAttributes().get("id");
+        if (userId == null || !userId.equals(dto.getDeclinedBy())) {
+            throw new RuntimeException("Unauthorized: declinedBy does not match token");
+        }
+
+        messagingTemplate.convertAndSendToUser(
+                String.valueOf(dto.getCallerId()),
+                "/queue/call.decline",
+                dto
+        );
+    }
 
     @GetMapping("/{conversationId}")
     public List<MessageDTO> getMessages(
