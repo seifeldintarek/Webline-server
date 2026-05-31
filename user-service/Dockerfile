@@ -1,14 +1,10 @@
-FROM eclipse-temurin:21-jdk-alpine AS build
+FROM maven:3.9-eclipse-temurin-21 AS build
 WORKDIR /app
-
+COPY pom.xml ./pom.xml
 COPY common-lib ./common-lib
 COPY user-service ./user-service
-
-RUN chmod +x ./user-service/mvnw && \
-    cd common-lib && \
-    ../user-service/mvnw install -DskipTests && \
-    cd ../user-service && \
-    ./mvnw package -DskipTests
+COPY message-service ./message-service
+RUN mvn -pl user-service -am clean package -DskipTests
 
 FROM eclipse-temurin:21-jre-alpine
 WORKDIR /app
