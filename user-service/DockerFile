@@ -4,6 +4,8 @@ WORKDIR /app
 COPY pom.xml ./pom.xml
 COPY common-lib ./common-lib
 COPY user-service ./user-service
+# Add empty message-service folder so root pom.xml doesn't complain
+RUN mkdir -p message-service
 
 RUN chmod +x ./user-service/mvnw && \
     ./user-service/mvnw -f pom.xml clean install \
