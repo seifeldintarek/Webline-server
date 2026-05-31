@@ -5,7 +5,8 @@ COPY pom.xml ./pom.xml
 COPY common-lib ./common-lib
 COPY message-service ./message-service
 
-RUN ./message-service/mvnw -f pom.xml clean install \
+RUN chmod +x ./message-service/mvnw && \
+    ./message-service/mvnw -f pom.xml clean install \
     -pl common-lib,message-service \
     -am -DskipTests
 

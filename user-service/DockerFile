@@ -5,7 +5,8 @@ COPY pom.xml ./pom.xml
 COPY common-lib ./common-lib
 COPY user-service ./user-service
 
-RUN ./user-service/mvnw -f pom.xml clean install \
+RUN chmod +x ./user-service/mvnw && \
+    ./user-service/mvnw -f pom.xml clean install \
     -pl common-lib,user-service \
     -am -DskipTests
 
