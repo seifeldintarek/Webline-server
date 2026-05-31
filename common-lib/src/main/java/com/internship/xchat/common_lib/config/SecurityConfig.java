@@ -46,14 +46,15 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-
-//        config.setAllowedOrigins(Arrays.asList("http://localhost:4200"));
-        config.setAllowedOriginPatterns(Arrays.asList("*"));
-        config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
+        config.setAllowedOriginPatterns(Arrays.asList(
+                "http://localhost:4200",
+                "https://Webline.vercel.app",
+                "https://Webline-*.vercel.app"
+        ));
+        config.setAllowedMethods(Arrays.asList("GET","POST","PUT","DELETE","OPTIONS","PATCH"));
         config.setAllowedHeaders(Arrays.asList("*"));
         config.setAllowCredentials(true);
         config.setMaxAge(3600L);
-
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);
         return source;

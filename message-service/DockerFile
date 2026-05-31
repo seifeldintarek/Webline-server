@@ -1,0 +1,15 @@
+FROM eclipse-temurin:21-jdk-alpine AS build
+WORKDIR /app
+
+COPY pom.xml ./pom.xml
+COPY common-lib ./common-lib
+COPY message-service ./message-service
+
+RUN ./message-service/mvnw -f pom.xml clean install \
+    -pl common-lib,message-service \
+    -am -DskipTests
+
+FROM eclipse-temurin:21-jre-alpine
+WORKDIR /app
+COPY --from=build /app/message-service/target/*.jar app.jar
+ENTRYPOINT ["java","-jar","app.jar","--spring.profiles.active=prod"]
